@@ -1,0 +1,49 @@
+﻿<form enctype="multipart/form-data"  method="post">
+    <p class="text-success" style="font-size:large">Назва товару:</p>
+    <input class="form-control" type="text" name="product.Name" placeholder="Введіть назву товару" /><br />
+
+    <p class="text-success" style="font-size:large">Опис товару:</p>
+    <textarea class="form-control" rows="3" name="product.Description" placeholder="Введіть опис товару"></textarea><br />
+
+    <p class="text-success" style="font-size:large">Країна виробник:</p>
+    <input class="form-control" type="text" name="product.Country" placeholder="Країна виробник" /><br />
+
+    <p class="text-success" style="font-size:large">Ціна:</p>
+    <input class="form-control" type="number" name="product.Price" placeholder="1000$" /><br />
+    
+    <br />
+    <select id="product.Measure" name="product.Measure">
+        <option value="">Одиниці виміру товару</option>
+        <option value="kg">кг.</option>
+        <option value="gramm">грамм</option>
+        <option value="liter">літр</option>
+        <option value="mililiter">мл.</option>
+        <option value="сanister">каністра</option>
+        <option value="box">коробка</option>
+        <option value="bottle">пляшка</option>
+        <option value="packet">пачка</option>
+        <option value="piece">шт.</option>
+        <option value="bag">мішок</option>
+    </select>
+    <br />
+    <br />
+
+    <p class="text-success" style="font-size:large">Группи товарів:</p>
+    <label>Солодощі </label><input type="checkbox" name="product.Groups.Sweets" value="true"/><br />
+    <label>Сухофрукти</label><input type="checkbox" name="product.Groups.DriedFruits" value="true"/><br />
+    <label>Спеції</label><input type="checkbox" name="product.Groups.Spice" value="true" /><br />
+    <label>Горіхи</label><input type="checkbox" name="product.Groups.Nuts" value="true" /><br />
+    <label>Олії</label><input type="checkbox" name="product.Groups.Oils" value="true" /><br />
+    <label>соуси</label><input type="checkbox" name="product.Groups.Sauces" value="true" /><br />
+    <label>Італійська продукція</label><input type="checkbox" name="product.Groups.Italian" value="true" /><br />
+    <label>Східна медицина</label><input type="checkbox" name="product.Groups.EasternMed" value="true" /><br />
+    <label>Бакалія</label><input type="checkbox" name="product.Groups.Grocery" value="true" /><br />
+
+    <br />
+    <p class="text-success" style="font-size:large">Завантажте зображення:</p>
+    <input type="file" accept="image/*" name="product.Image" value="product.Image" id="product.Image"/><br />
+    <br />
+
+    <input  type="submit" value="Відправити" />
+
+</form>

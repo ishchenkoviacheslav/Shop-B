@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAotmLQ6by/0iH+nqOK5F9uAAAAAACAAAAAAAQZgAAAAEAACAAAACshCPUHgv++9boPpSzJOTzXO0DUVISeFQpI4fNRJw8EgAAAAAOgAAAAAIAACAAAAC7qnnDyjESnjdj8eHNC2Pe7F6LXCp6jcrvYZnQbM4CIyAAAAC7408x0MZ2vq4aidn11G3yycCLnb2ozVddx0drSVSuaEAAAAB0Pzlm9JKUD6iP3Lj/HxbzJ49PI9vXWMaPDSf1A6pGki5TXTsneMXRs2WOqLD/ofIjp05D9PAbcIWgok0OwuRn</EncryptedPassword>
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Data Source=SQL6003.SmarterASP.NET;Initial Catalog=DB_A29B8F_albarakadb;User Id=DB_A29B8F_albarakadb_admin;Password=!Tt0997139361;</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

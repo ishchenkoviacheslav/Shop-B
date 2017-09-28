@@ -1,0 +1,167 @@
+﻿@{ 
+    @using Al_Baraka.Models;
+    @model Product
+}
+<form enctype="multipart/form-data" method="post">
+    <input type="hidden" name="EditingProduct.Id" value="@Model.Id"/>
+    <p class="text-success" style="font-size:large">Назва товару:</p>
+    <input class="form-control" type="text" name="EditingProduct.Name" value="@Model.Name" /><br />
+
+    <p class="text-success" style="font-size:large">Опис товару:</p>
+    <textarea class="form-control" rows="3" name="EditingProduct.Description">@Model.Description</textarea><br />
+
+    <p class="text-success" style="font-size:large">Країна виробник:</p>
+    <input class="form-control" type="text" name="EditingProduct.Country" value="@Model.Country" /><br />
+
+    <p class="text-success" style="font-size:large">Ціна:</p>
+    <input class="form-control" type="number" name="EditingProduct.Price" value="@Model.Price" /><br />
+
+    <br />
+    <select id="EditingProduct.Measure" name="EditingProduct.Measure">
+        <option value="@Model.Measure.ToString()">@Model.Measure.ToString()</option>
+        <option value="kg">кг.</option>
+        <option value="gramm">грамм</option>
+        <option value="liter">літр</option>
+        <option value="mililiter">мл.</option>
+        <option value="сanister">каністра</option>
+        <option value="box">коробка</option>
+        <option value="bottle">пляшка</option>
+        <option value="packet">пачка</option>
+        <option value="piece">шт.</option>
+        <option value="bag">мішок</option>
+    </select>
+    <br />
+    <br />
+   
+    <p class="text-success" style="font-size:large">Группи товарів:</p>
+    <label>Солодощі </label>
+    <input type="checkbox" id="EditingProduct.Groups.Sweets" name="EditingProduct.Groups.Sweets" value="true"/><br />
+    <input type="hidden" id="EditingProduct.Groups.Sweets" name="EditingProduct.Groups.Sweets" value="false"/><br />
+    
+    <label>Сухофрукти</label>
+    <input type="checkbox" id="EditingProduct.Groups.DriedFruits" name="EditingProduct.Groups.DriedFruits" value="true"/><br />
+    <input type="hidden" id="EditingProduct.Groups.DriedFruits" name="EditingProduct.Groups.DriedFruits" value="false"/><br />
+
+    <label>Спеції</label>
+    <input type="checkbox" id="EditingProduct.Groups.Spice" name="EditingProduct.Groups.Spice" value="true"/><br />
+    <input type="hidden" id="EditingProduct.Groups.Spice" name="EditingProduct.Groups.Spice" value="false"/><br />
+    
+    <label>Горіхи</label>
+    <input type="checkbox" id="EditingProduct.Groups.Nuts" name="EditingProduct.Groups.Nuts" value="true"/><br />
+    <input type="hidden" id="EditingProduct.Groups.Nuts"  name="EditingProduct.Groups.Nuts" value="false"/><br />
+    
+    <label>Олії</label>
+    <input type="checkbox" id="EditingProduct.Groups.Oils" name="EditingProduct.Groups.Oils" value="true"/><br />
+    <input type="hidden" id="EditingProduct.Groups.Oils" name="EditingProduct.Groups.Oils" value="false"/><br />
+    
+    <label>соуси</label>
+    <input type="checkbox" id="EditingProduct.Groups.Sauces" name="EditingProduct.Groups.Sauces" value="true"/><br />
+    <input type="hidden" id="EditingProduct.Groups.Sauces" name="EditingProduct.Groups.Sauces" value="false"/><br />
+    
+    <label>Італійська продукція</label>
+    <input type="checkbox" id="EditingProduct.Groups.Italian" name="EditingProduct.Groups.Italian" value="true"/><br />
+    <input type="hidden" id="EditingProduct.Groups.Italian" name="EditingProduct.Groups.Italian" value="false"/><br />
+    
+    <label>Східна медицина</label>
+    <input type="checkbox" id="EditingProduct.Groups.EasternMed" name="EditingProduct.Groups.EasternMed" value="true"/><br />
+    <input type="hidden" id="EditingProduct.Groups.EasternMed" name="EditingProduct.Groups.EasternMed" value="false"/><br />
+    
+    <label>Бакалія</label>
+    <input type="checkbox" id="EditingProduct.Groups.Grocery" name="EditingProduct.Groups.Grocery" value="true"/><br />
+    <input type="hidden" id="EditingProduct.Groups.Grocery" name="EditingProduct.Groups.Grocery" value="false"/><br />
+    
+    <script>
+        var sweets = document.getElementById("EditingProduct.Groups.Sweets");
+        if(@Model.Groups.Sweets.ToString().ToLower())
+        {
+            sweets.checked = true;
+        }
+        else
+        {
+            sweets.checked = false;
+        }
+
+        var dfruits= document.getElementById("EditingProduct.Groups.DriedFruits");
+        if(@Model.Groups.DriedFruits.ToString().ToLower())
+        {
+            dfruits.checked = true;
+        }
+        else
+        {
+            dfruits.checked = false;
+        }
+
+        var spice = document.getElementById("EditingProduct.Groups.Spice");
+        if(@Model.Groups.Spice.ToString().ToLower())
+        {
+            spice.checked = true;
+        }
+        else
+        {
+            spice.checked = false;
+        }
+
+        var Nuts = document.getElementById("EditingProduct.Groups.Nuts");
+        if(@Model.Groups.Nuts.ToString().ToLower())
+        {
+            Nuts.checked = true;
+        }
+        else
+        {
+            Nuts.checked = false;
+
+        }
+         var Oils = document.getElementById("EditingProduct.Groups.Oils");
+        if(@Model.Groups.Oils.ToString().ToLower())
+        {
+            Oils.checked = true;
+        }
+        else
+        {
+            Oils.checked = false;
+        }
+         var Sauces = document.getElementById("EditingProduct.Groups.Sauces");
+        if(@Model.Groups.Sauces.ToString().ToLower())
+        {
+            Sauces.checked = true;
+        }
+        else
+        {
+            Sauces.checked = false;
+        }
+         var Italian = document.getElementById("EditingProduct.Groups.Italian");
+        if(@Model.Groups.Italian.ToString().ToLower())
+        {
+            Italian.checked = true;
+        }
+        else
+        {
+            Italian.checked = false;
+        }
+         var EasternMed = document.getElementById("EditingProduct.Groups.EasternMed");
+        if(@Model.Groups.EasternMed.ToString().ToLower())
+        {
+            EasternMed.checked = true;
+        }
+        else
+        {
+            EasternMed.checked = false;
+        }
+         var Grocery = document.getElementById("EditingProduct.Groups.Grocery");
+        if(@Model.Groups.Grocery.ToString().ToLower())
+        {
+            Grocery.checked = true;
+        }
+        else
+        {
+            Grocery.checked = false;
+        }
+    </script>
+    <br />
+    <p class="text-success" style="font-size:large">Завантажте зображення(якщо ви хочете видалити попереднє зображення, просто завантажте нове) :</p>
+    <input type="file" accept="image/*" name="EditingProduct.Image" value="EditingProduct.Image" id="EditingProduct.Image" /><br />
+    <br />
+
+    <input type="submit" value="Відправити" />
+
+</form>

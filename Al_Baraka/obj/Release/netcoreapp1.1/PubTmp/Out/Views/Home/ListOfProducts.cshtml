@@ -1,0 +1,64 @@
+﻿@using Al_Baraka.Models;
+@model List<Product>
+<form asp-controller="Home" asp-action="listOfProducts" formmethod="post">
+    <br />
+    <input type="text" id="searchPattern" name="searchPattern" style="width:200px" placeholder="Введіть ім'я або номер товару"/>
+    <button type="submit" class="btn btn-success" style="width:100px">Пошук</button>
+    <br />
+    <br />
+</form>
+@if(Model == null || Model.Count == 0)
+{
+    <span class="info" style="color:red">Вибачте, але за данним запитом не було знайдено товари</span>
+}
+<table class="table table-bordered table-hover">
+    <tbody>
+        <tr><th>ID</th><th>Ім'я</th><th>Опис</th><th>Ціна</th><th>Міри виміру</th><th>Країна виробник</th><th>Зображення</th><th>Присутність у группах</th></tr>
+        @foreach (Product p in Model)
+        {
+            var base64 = Convert.ToBase64String(p.Image);
+            var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+            <tr><td>@p.Id</td><td style="padding:0">@p.Name</td><td style="padding:0">@p.Description.Substring(0,(p.Description.Length > 420?420: p.Description.Length)).. </td><td>@p.Price</td><td>@p.Measure</td><td>@p.Country</td><td style="padding:0"><img src="@imgSrc" alt="" width="100%" /></td>
+        <td style="padding:0">
+                        @if (@p.Groups.DriedFruits.ToString() == "True")
+                        {
+                            <p>Сушені фрукти</p>
+            }
+            @if (@p.Groups.EasternMed.ToString() == "True")
+            {
+                <p>Східна медицина</p>
+            }
+            @if (@p.Groups.Grocery.ToString() == "True")
+            {
+                <p>Бакалія</p>
+            }
+            @if (@p.Groups.Italian.ToString() == "True")
+            {
+                <p>Італійська продукція</p>
+            }
+            @if (@p.Groups.Nuts.ToString() == "True")
+            {
+                <p>Горіхи</p>
+            }
+            @if (@p.Groups.Oils.ToString() == "True")
+            {
+                <p>Олії/Масла</p>
+            }
+            @if (@p.Groups.Sauces.ToString() == "True")
+            {
+                <p>Соуси</p>
+            }
+            @if (@p.Groups.Spice.ToString() == "True")
+            {
+                <p>Спеції</p>
+            }
+            @if (@p.Groups.Sweets.ToString() == "True")
+            {
+                <p>Солодощі</p>
+            }
+         </td>
+        <td><a asp-area="" asp-controller="Home" asp-action="Edit" asp-route-idproduct="@p.Id">edit</a></td><td><a asp-area="" asp-controller="Home" asp-action="delete" asp-route-idproduct="@p.Id">Delete</a></td></tr>
+        }
+    </tbody>
+</table>
+    

@@ -1,0 +1,35 @@
+﻿<h1>Мої товари</h1>
+@using Al_Baraka.Models;
+@model List<Order>
+
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>Id товару</th>
+        <th>Назва товару</th>
+        <th>Фото</th>
+        <th>Опис</th>
+        <th>Кількість</th>
+        <th>Ціна</th>
+        <th>Сумма</th>
+        <th></th>
+    </tr>
+    <tbody>
+        @foreach (Order r in Model)
+        {
+            var base64 = Convert.ToBase64String(r.ProductItem.Image);
+            var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+            <tr>
+                <td>@r.ProductId</td>
+                <td>@r.ProductItem.Name</td>
+                <td><img src="@imgSrc" alt="" width="50%" /></td>
+                <td>@r.ProductItem.Description</td>
+                <td>@r.Quantity</td>
+                <td>@r.Price</td>
+                <td>(@r.Price* @r.Quantity)</td>
+                <td><a asp-area="" asp-controller="Home" asp-action="OrderDelete" asp-route-idOrder="@r.Id">Видалити</a></td>
+            </tr>
+        }
+    </tbody>
+
+</table>

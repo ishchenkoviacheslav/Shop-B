@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Delete";
+}
+@model int
+<h2>Ви впевнені що хочете видалити цей продукт?</h2>
+<form asp-controller="Home" asp-action="Delete" formmethod="post" asp-route-idproduct="@Model">
+    <button type="submit" class="btn btn-danger" style="width:100px">Так</button>
+</form>
+<br />
+<form asp-controller="Home" asp-action="listofproducts" formmethod="get">
+    <button type="submit" class="btn btn-primary" style="width:100px">Ні</button>
+</form>

@@ -1,0 +1,26 @@
+﻿@using Al_Baraka.Models;
+@model List<Review>
+
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>Id</th>
+        <th>UserId</th>
+        <th>Name</th>
+        <th>Message</th>
+        <th>Contact</th>
+    </tr>
+    <tbody>
+        @foreach (Review r in Model)
+            {
+            <tr>
+                <td>@r.Id</td>
+                <td>@r.UserId</td>
+                <td>@r.Name</td>
+                <td>@r.ReviewText</td>
+                <td>@r.Contact</td>
+            </tr>
+        }
+    </tbody>
+
+</table>

@@ -1,0 +1,10 @@
+C:\Users\user\Documents\Visual Studio 2017\Projects\Al_Baraka\Al_Baraka\bin\Release\netcoreapp1.1\Al_Baraka.deps.json
+C:\Users\user\Documents\Visual Studio 2017\Projects\Al_Baraka\Al_Baraka\bin\Release\netcoreapp1.1\Al_Baraka.runtimeconfig.json
+C:\Users\user\Documents\Visual Studio 2017\Projects\Al_Baraka\Al_Baraka\bin\Release\netcoreapp1.1\Al_Baraka.runtimeconfig.dev.json
+C:\Users\user\Documents\Visual Studio 2017\Projects\Al_Baraka\Al_Baraka\bin\Release\netcoreapp1.1\Al_Baraka.dll
+C:\Users\user\Documents\Visual Studio 2017\Projects\Al_Baraka\Al_Baraka\bin\Release\netcoreapp1.1\Al_Baraka.pdb
+C:\Users\user\Documents\Visual Studio 2017\Projects\Al_Baraka\Al_Baraka\obj\Release\netcoreapp1.1\Al_Baraka.AssemblyInfo.cs
+C:\Users\user\Documents\Visual Studio 2017\Projects\Al_Baraka\Al_Baraka\obj\Release\netcoreapp1.1\Al_Baraka.dll
+C:\Users\user\Documents\Visual Studio 2017\Projects\Al_Baraka\Al_Baraka\obj\Release\netcoreapp1.1\Al_Baraka.pdb
+C:\Users\user\Documents\Visual Studio 2017\Projects\Al_Baraka\Al_Baraka\obj\Release\netcoreapp1.1\Al_Baraka.csprojResolveAssemblyReference.cache
+C:\Users\user\Documents\Visual Studio 2017\Projects\Al_Baraka\Al_Baraka\obj\Release\netcoreapp1.1\Al_Baraka.csproj.CoreCompileInputs.cache

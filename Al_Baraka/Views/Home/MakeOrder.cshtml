@@ -1,0 +1,19 @@
+﻿@model string
+    @if (Model == "Ви вже додавали цю позицію до корзини, для того щоб збільшити кількість одиниці данного товару перейдить до списку ваших товарів")
+    {
+        <label class="label-info" style="margin:10px">@Model</label>
+        <form class="form" asp-controller="Home" asp-action="Order" style="margin-top:5px;margin-bottom:5px" formmethod="get">
+            <button class="btn-danger">Мої товари</button>
+        </form>
+    }
+    @if(Model == "Товар був доданий до корзини, для підтвердження заповніть форму та натисніть кнопку підтвердження")
+    {
+        <label class="label-info">@Model</label>
+        <form asp-controller="Home" asp-action="MakeOrder" formmethod="post">
+            <div class="form-group">
+                <br />
+                <textarea class="form-control" rows="3" id="Contacts" name="Contacts" placeholder="Введіть дані для зв'язку з вами. Номер телефону, електронную пошту, або інше."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Додати ці контакти для зв'язку зі мною</button>
+        </form>
+    }

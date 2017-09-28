@@ -1,0 +1,120 @@
+﻿@using Al_Baraka.Models;
+@model List<Product>
+@{
+    int coutoftrue = 0;
+
+
+    for (int i = 0; i < Model.Count; i++)
+    {
+        if (Model[i].Groups.DriedFruits)
+        {
+            coutoftrue++;
+        }
+        if (Model[i].Groups.EasternMed)
+        {
+            coutoftrue++;
+        }
+        if (Model[i].Groups.Grocery)
+        {
+            coutoftrue++;
+        }
+        if (Model[i].Groups.Italian)
+        {
+            coutoftrue++;
+        }
+        if (Model[i].Groups.Nuts)
+        {
+            coutoftrue++;
+        }
+        if (Model[i].Groups.Oils)
+        {
+            coutoftrue++;
+        }
+        if (Model[i].Groups.Sauces)
+        {
+            coutoftrue++;
+        }
+        if (Model[i].Groups.Spice)
+        {
+            coutoftrue++;
+        }
+        if (Model[i].Groups.Sweets)
+        {
+            coutoftrue++;
+        }
+        if (coutoftrue == 1)
+        {
+            if (Model[i].Groups.DriedFruits)
+            {
+                <h1>Сухофрукти</h1>
+            }
+            if (Model[i].Groups.EasternMed)
+            {
+                <h1>Східна медицина</h1>
+            }
+            if (Model[i].Groups.Grocery)
+            {
+                <h1>Бакалія</h1>
+            }
+            if (Model[i].Groups.Italian)
+            {
+                <h1>Італійська продукція</h1>
+            }
+            if (Model[i].Groups.Nuts)
+            {
+                <h1>Горіхи</h1>
+            }
+            if (Model[i].Groups.Oils)
+            {
+                <h1>Олії</h1>
+            }
+            if (Model[i].Groups.Sauces)
+            {
+                <h1>Соуси</h1>
+            }
+            if (Model[i].Groups.Spice)
+            {
+                <h1>Спеції</h1>
+            }
+            if (Model[i].Groups.Sweets)
+            {
+                <h1>Солодощі</h1>
+            }
+            break;
+        }
+        else
+        {
+            coutoftrue = 0;
+        }
+    }
+}
+
+
+
+   <section id="posts" class="page-section">
+    <div class="container">
+        <div class="row">
+            <br />
+            @for (int i = 0; i < @Model.Count; i++)
+            {
+                var base64 = Convert.ToBase64String(Model[i].Image);
+                var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="post-inside">
+                        @*<div class="post-thumb">*@
+                            <a asp-area="" asp-controller="Home" asp-action="Details" asp-route-IdProduct="@Model[i].Id">
+                                <img src="@imgSrc" alt="" style="padding:10px;margin-left:10px;margin-right:10px;max-height:240px;min-height:240px"/>
+                            </a>
+                        @*</div>*@
+                        <div class="post-content">
+                            <h5><a asp-area="" asp-controller="Home" asp-action="Details" asp-route-IdProduct="@Model[i].Id">@Model[i].Name </a></h5>
+
+                            <p>@Model[i].Description.Substring(0, (Model[i].Description.Length > 30 ? 30 : Model[i].Description.Length)) ..</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

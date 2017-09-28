@@ -1,0 +1,22 @@
+﻿@model string
+@if (Model != null)
+{
+    @if (Model.Contains("дякуємо"))
+    {
+        <h1 style="color:green">@Model</h1>
+    }
+    else
+    {
+        <h1 style="color:red">@Model</h1>
+    }
+}
+<form asp-controller="Home" asp-action="Tips" formmethod="post">
+    <div class="form-group">
+        <input type="text" class="form-control" id="ClientName" name="ClientName" placeholder="Ваше ім'я">
+        <br />
+        <input type="text" class="form-control" id="ClientContact" name="ClientContact" placeholder="Введіть дані для контакту з вами">
+        <br />
+        <textarea class="form-control" rows="3" id="Message" name="Message" placeholder="Напишіть те що ви хочете нам сказати"></textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Надіслати</button>
+</form>
