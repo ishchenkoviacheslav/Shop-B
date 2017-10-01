@@ -1,0 +1,69 @@
+﻿<h1>Orders list</h1>
+@using Al_Baraka.Models;
+@model IEnumerable<IGrouping<int, Order>>
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th style="padding:2px">Id клиента(и логин)</th>
+        <th style="padding:2px">Дата і час додавання товару у корзину</th>
+        <th style="padding:2px">Id товару</th>
+        <th style="padding:2px">Назва товару</th>
+        <th style="padding:2px">Фото</th>
+        <th style="padding:2px">Кількість одиниць</th>
+        <th style="padding:2px">Ціна в момент додавання товара у корзину</th>
+        <th style="padding:2px">Сумма</th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tbody>
+
+        @foreach (IGrouping<int, Order> group in Model)
+        {
+            int i = 0;
+            foreach (Order order in group)
+            {
+                int sum = order.Price * order.Quantity;
+                var base64 = Convert.ToBase64String(order.ProductItem.Image);
+                var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+                <tr>
+                    <td style="padding:2px">@order.UserId </td>
+                    <td style="padding:2px">@order.TimeOfBye</td>
+                    <td style="padding:2px">@order.ProductId</td>
+                    <td style="padding:2px">@order.ProductItem.Name</td>
+                    <td style="padding:2px"><img src="@imgSrc" alt="" width="100px" /></td>
+                    <td style="padding:2px">
+                        <form asp-controller="Home" asp-action="OrderChangeQuantityAsync" method="get">
+                            <input type="text" id="quantity" name="quantity" rows="1" style="width:50px" value="@order.Quantity">
+                            <input type="hidden" id="idproduct" name="idproduct" value="@order.ProductId" />
+                            <input type="hidden" id="iduser" name="iduser" value="@order.UserId" />
+                            <br />
+                            <button type="submit">Зберегти</button>
+                        </form>
+                    </td>
+                    <td style="padding:2px">@order.Price</td>
+                    <td style="padding:2px">@sum</td>
+                    <td style="padding:2px"><a asp-area="" asp-controller="Home" asp-action="OrderDelete" asp-route-idOrder="@order.Id">Видалити</a></td>
+                    
+                    @*<td style="padding:2px">текст для комментария для админа</td>*@
+                    @if(i==0)
+                    {
+                        <td style="padding:2px" rowspan="3">
+                            <form asp-controller="Home" asp-action="OrderNote" method="get">
+                                <textarea type="text" id="note" name="note" rows="5" style="width:50px" >@order.Note</textarea>
+                                <input type="hidden" id="iduser" name="iduser" value="@order.UserId" />
+                                <br />
+                                <button type="submit">Зберегти</button>
+                            </form>
+                        </td>
+                        i = order.UserId;
+                    }
+                </tr>
+
+            }
+            <tr><td style="padding:2px" colspan="10"><a asp-area="" asp-controller="Home" asp-action="CloseAndDeleteOrder" asp-route-idClient="@i">Закрити та видалити заказ</a></td></tr>
+            i = 0;
+            <tr><td style="background:darkolivegreen" colspan="10"></td></tr>
+        }
+
+    </tbody>
+</table>

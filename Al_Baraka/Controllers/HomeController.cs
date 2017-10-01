@@ -324,9 +324,17 @@ namespace Al_Baraka.Controllers
             return View();
         }
         [Authorize]
-        public IActionResult Order()
+        public async Task<IActionResult> Order()
         {
-            return View(pc.Orders.Include((o)=>o.ProductItem).ToList());
+            User currUser = await pc.Users.FirstOrDefaultAsync((u) => u.Login == User.Identity.Name);
+            int userId;
+            if (currUser != null)
+            {
+                userId = currUser.Id;
+            }
+            else
+                throw new Exception("didn't find current user");
+            return View(pc.Orders.Include((o)=>o.ProductItem).Where((o)=>o.UserId==userId && o.IsDone==false).ToList());
         }
         
         [Authorize(Roles= "admin")]
@@ -339,16 +347,25 @@ namespace Al_Baraka.Controllers
         public async Task<IActionResult> OrderDelete(int idOrder)
         {
             Order delOrder = pc.Orders.FirstOrDefault((o) => o.Id == idOrder);
-            if(delOrder!=null)
+            if (delOrder != null)
             {
                 pc.Orders.Remove(delOrder);
                 await pc.SaveChangesAsync();
             }
             else
             {
-                throw new Exception("don't find Order for delete");
+                throw new Exception("didn't find Order for delete");
             }
-            return View("Order", pc.Orders.Include((o) => o.ProductItem).ToList());
+            if (User.IsInRole("user"))
+            {
+                User currUser = await pc.Users.FirstOrDefaultAsync((u) => u.Login == User.Identity.Name);
+                return View("Order", pc.Orders.Include((o) => o.ProductItem).Where((o) => o.UserId == currUser.Id).ToList());
+            }
+            else
+            {
+                IEnumerable<IGrouping<int, Order>> OrdersList = from o in (await pc.Orders.Include(o => o.ProductItem).Where((o) => o.IsDone == false).ToListAsync()) orderby o.TimeOfBye group o by o.UserId;
+                return View("OrdersList", OrdersList);
+            }
         }
         [Authorize]
         [HttpGet]
@@ -377,18 +394,19 @@ namespace Al_Baraka.Controllers
             {
                 throw new Exception("don't find Product or User by id");
             }
-            return View("MakeOrder","Товар був доданий до корзини, для підтвердження заповніть форму та натисніть кнопку підтвердження");//if change here must also to change in MakeOrder.cshtml!!!!
+            return View("MakeOrder","Товар був доданий до корзини, будь-ласка, надайте нам ваші контактні дані. Після цього ви можете відправити нам ваше замовлення з розілку 'Мої товари'.");//if change here must also to change in MakeOrder.cshtml!!!!
         }
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> MakeOrder(string Contacts)
         {
+            if (Contacts == null)//if clien didn't write some contact
+                return View("MakeOrder","Товар був доданий до корзини, будь-ласка, надайте нам ваші контактні дані. Після цього ви можете відправити нам ваше замовлення з розілку 'Мої товари'.");//if change here than must to change in MakeOrder.cshtml
             User currUser = await pc.Users.FirstOrDefaultAsync((u) => u.Login == User.Identity.Name);
             Order SomeOrder = await pc.Orders.FirstOrDefaultAsync((o) => o.UserId == currUser.Id);
             if(SomeOrder != null)
             {
-                if (Contacts == null)//if clien didn't write some contact
-                    Contacts = "invalid";
+               
                 SomeOrder.Contact = Contacts;
                 await pc.SaveChangesAsync();
             }
@@ -396,7 +414,46 @@ namespace Al_Baraka.Controllers
             {
                 throw new Exception("No one product exists");
             }
-            return View("Order", pc.Orders.Include((o) => o.ProductItem).ToList());
+            return View("Order", pc.Orders.Include((o) => o.ProductItem).Where((o) => o.UserId == currUser.Id && o.IsDone == false).ToList());
+        }
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> OrderChangeQuantityAsync(int quantity, int idproduct, int iduser)
+        {
+            Order currOrder = await pc.Orders.FirstOrDefaultAsync((o) => o.ProductId == idproduct && iduser == o.UserId && o.IsDone == false);
+            currOrder.Quantity = quantity;
+            await pc.SaveChangesAsync();
+            if (User.IsInRole("user"))
+                return View("Order", pc.Orders.Include((o) => o.ProductItem).Where((o) => o.UserId == iduser && o.IsDone == false).ToList());
+            else
+            {
+                //take orders that are NO IsDone(not closed orders) and group by client id and sort by order time(from newest)
+                IEnumerable<IGrouping<int, Order>> OrdersList = from o in (await pc.Orders.Include(o => o.ProductItem).Where((o) => o.IsDone == false).ToListAsync()) orderby o.TimeOfBye group o by o.UserId;
+                return View("OrdersList", OrdersList);
+            }
+                
+        }
+        [Authorize(Roles ="admin")]
+        [HttpGet]
+        public async Task<IActionResult> OrdersList()
+        {
+            //take orders that are NO IsDone(not closed orders) and group by client id and sort by order time(from newest)
+            IEnumerable<IGrouping<int, Order>> OrdersList = from o in (await pc.Orders.Include(o => o.ProductItem).Where((o) => o.IsDone == false).ToListAsync()) orderby o.TimeOfBye group o by o.UserId;
+            return View(OrdersList);
+        }
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        public async Task<IActionResult> CloseAndDeleteOrder(int idClient)
+        {
+            var OrdersForDelete = pc.Orders.Where((o) => o.UserId == idClient);
+            if(OrdersForDelete!=null)
+            {
+                pc.Orders.RemoveRange(OrdersForDelete);
+                await pc.SaveChangesAsync();
+            }
+            //take orders that are NO IsDone(not closed orders) and group by client id and sort by order time(from newest)
+            IEnumerable<IGrouping<int, Order>> OrdersList = from o in (await pc.Orders.Include(o => o.ProductItem).Where((o) => o.IsDone == false).ToListAsync()) orderby o.TimeOfBye group o by o.UserId;
+            return View("OrdersList", OrdersList);
         }
     }
 }

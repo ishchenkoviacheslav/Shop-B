@@ -17,6 +17,7 @@ namespace Al_Baraka.Models
         public int Price { get; set; }
         public string Contact { get; set; }
         public bool IsDone { get; set; }
+        public string Note { get; set; }
 
     }
 }

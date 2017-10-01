@@ -6,13 +6,13 @@
             <button class="btn-danger">Мої товари</button>
         </form>
     }
-    @if(Model == "Товар був доданий до корзини, для підтвердження заповніть форму та натисніть кнопку підтвердження")
+    @if(Model == "Товар був доданий до корзини, будь-ласка, надайте нам ваші контактні дані. Після цього ви можете відправити нам ваше замовлення з розілку 'Мої товари'.")
     {
         <label class="label-info">@Model</label>
         <form asp-controller="Home" asp-action="MakeOrder" formmethod="post">
             <div class="form-group">
                 <br />
-                <textarea class="form-control" rows="3" id="Contacts" name="Contacts" placeholder="Введіть дані для зв'язку з вами. Номер телефону, електронную пошту, або інше."></textarea>
+                <textarea class="form-control" rows="3" id="Contacts" name="Contacts" placeholder="Введіть дані для зв'язку з вами. Номер телефону, електронную пошту, або інше. Такоже ви можете залишити тут свої коментарі."></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Додати ці контакти для зв'язку зі мною</button>
         </form>
