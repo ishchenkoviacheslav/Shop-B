@@ -1,5 +1,5 @@
 ﻿@model string
-    @if (Model == "Ви вже додавали цю позицію до корзини, для того щоб збільшити кількість одиниці данного товару перейдить до списку ваших товарів")
+    @if (Model == "Ви вже додавали цю позицію до корзини, для того щоб збільшити кількість одиниць данного товару перейдить до списку ваших товарів")
     {
         <label class="label-info" style="margin:10px">@Model</label>
         <form class="form" asp-controller="Home" asp-action="Order" style="margin-top:5px;margin-bottom:5px" formmethod="get">
@@ -15,5 +15,12 @@
                 <textarea class="form-control" rows="3" id="Contacts" name="Contacts" placeholder="Введіть дані для зв'язку з вами. Номер телефону, електронную пошту, або інше. Такоже ви можете залишити тут свої коментарі."></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Додати ці контакти для зв'язку зі мною</button>
+        </form>
+    }
+    @if (Model == "Товар був доданий до корзини, якщо ви бажаете змінити ваші контактні дані або кількість одиниць товару перейдіть до розділу 'Мої товари'.")
+    {
+        <label class="label-info" style="margin:10px">@Model</label>
+        <form class="form" asp-controller="Home" asp-action="Order" style="margin-top:5px;margin-bottom:5px" formmethod="get">
+            <button class="btn-danger">Мої товари</button>
         </form>
     }

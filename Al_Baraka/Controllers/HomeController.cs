@@ -379,7 +379,7 @@ namespace Al_Baraka.Controllers
                 Order ExsistingOrder = await pc.Orders.FirstOrDefaultAsync((o) => o.ProductId == idproduct && o.UserId == currUser.Id);
                 if (ExsistingOrder != null)
                 {//you cant make twice, if you want make two position of this product than must go to the 'Мої товари' page.
-                    return View("MakeOrder", "Ви вже додавали цю позицію до корзини, для того щоб збільшити кількість одиниці данного товару перейдить до списку ваших товарів");//if change here must also to change in MakeOrder.cshtml!!!!
+                    return View("MakeOrder", "Ви вже додавали цю позицію до корзини, для того щоб збільшити кількість одиниць данного товару перейдить до списку ваших товарів");//if change here must also to change in MakeOrder.cshtml!!!!
                 }
                 else//current user didn't add current product to his order
                 {
@@ -388,13 +388,22 @@ namespace Al_Baraka.Controllers
                     Order NewOrder = new Order() { IsDone = false, Price = currProd.Price, TimeOfBye = DateTime.Now, UserId = currUser.Id, ProductItem = currProd, ProductId = idproduct, Quantity = 1 };
                     pc.Orders.Add(NewOrder);
                     await pc.SaveChangesAsync();
+                    
                 }
             }
             else
             {
                 throw new Exception("don't find Product or User by id");
             }
-            return View("MakeOrder","Товар був доданий до корзини, будь-ласка, надайте нам ваші контактні дані. Після цього ви можете відправити нам ваше замовлення з розілку 'Мої товари'.");//if change here must also to change in MakeOrder.cshtml!!!!
+            if (pc.Orders.Where((o)=>o.UserId == currUser.Id).Any((o)=>o.Contact != null))//if user didn't give his contact, than ask
+            {
+               return View("MakeOrder", "Товар був доданий до корзини, якщо ви бажаете змінити ваші контактні дані або кількість одиниць товару перейдіть до розділу 'Мої товари'.");
+            }
+            else
+            {
+                 return View("MakeOrder", "Товар був доданий до корзини, будь-ласка, надайте нам ваші контактні дані. Після цього ви можете відправити нам ваше замовлення з розілку 'Мої товари'.");
+            }
+            
         }
         [Authorize]
         [HttpPost]
@@ -403,11 +412,13 @@ namespace Al_Baraka.Controllers
             if (Contacts == null)//if clien didn't write some contact
                 return View("MakeOrder","Товар був доданий до корзини, будь-ласка, надайте нам ваші контактні дані. Після цього ви можете відправити нам ваше замовлення з розілку 'Мої товари'.");//if change here than must to change in MakeOrder.cshtml
             User currUser = await pc.Users.FirstOrDefaultAsync((u) => u.Login == User.Identity.Name);
-            Order SomeOrder = await pc.Orders.FirstOrDefaultAsync((o) => o.UserId == currUser.Id);
-            if(SomeOrder != null)
+            var orders = pc.Orders.Where((o) => o.UserId == currUser.Id);
+            if(orders != null)
             {
-               
-                SomeOrder.Contact = Contacts;
+                foreach (var ord in orders)
+                {
+                    ord.Contact = Contacts;
+                }
                 await pc.SaveChangesAsync();
             }
             else
@@ -433,6 +444,22 @@ namespace Al_Baraka.Controllers
             }
                 
         }
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> OrderChangeContacts(string contacts, int idproduct, int iduser)
+        {
+            if(contacts==null)
+                return View("Order", pc.Orders.Include((o) => o.ProductItem).Where((o) => o.UserId == iduser && o.IsDone == false).ToList());
+
+            List<Order> ordersList = await pc.Orders.Where((o) => iduser == o.UserId && o.IsDone == false).ToListAsync();
+            foreach (var item in ordersList)
+            {
+                item.Contact = contacts;
+            }
+            await pc.SaveChangesAsync();
+
+            return View("Order", pc.Orders.Include((o) => o.ProductItem).Where((o) => o.UserId == iduser && o.IsDone == false).ToList());
+        }
         [Authorize(Roles ="admin")]
         [HttpGet]
         public async Task<IActionResult> OrdersList()
@@ -452,6 +479,23 @@ namespace Al_Baraka.Controllers
                 await pc.SaveChangesAsync();
             }
             //take orders that are NO IsDone(not closed orders) and group by client id and sort by order time(from newest)
+            IEnumerable<IGrouping<int, Order>> OrdersList = from o in (await pc.Orders.Include(o => o.ProductItem).Where((o) => o.IsDone == false).ToListAsync()) orderby o.TimeOfBye group o by o.UserId;
+            return View("OrdersList", OrdersList);
+        }
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        public async Task<IActionResult> OrderNote(string note, int iduser)
+        {
+            Order order = await pc.Orders.Where((o) => o.UserId == iduser).FirstOrDefaultAsync();
+            if(order!= null)
+            {
+                order.Note = note;
+                await pc.SaveChangesAsync();
+            }
+            else
+            {
+                throw new Exception("Did't find order for add note");
+            }
             IEnumerable<IGrouping<int, Order>> OrdersList = from o in (await pc.Orders.Include(o => o.ProductItem).Where((o) => o.IsDone == false).ToListAsync()) orderby o.TimeOfBye group o by o.UserId;
             return View("OrdersList", OrdersList);
         }
