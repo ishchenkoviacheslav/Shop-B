@@ -80,6 +80,7 @@ namespace Al_Baraka
 
             string adminLogin = "albaraka";
             string adminPassword = "albaraka";
+            adminPassword = EncryptionHelper.Encrypt(adminPassword);
 
             using (ProductContext db = serviceProvider.GetRequiredService<ProductContext>())
             {

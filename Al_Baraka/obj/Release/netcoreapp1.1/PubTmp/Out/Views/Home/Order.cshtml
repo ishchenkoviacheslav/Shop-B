@@ -1,35 +1,92 @@
 ﻿<h1>Мої товари</h1>
 @using Al_Baraka.Models;
 @model List<Order>
-
+@{
+    string orderContact = "NONE";
+    int ProductId = 0;
+    int UserID = 0;
+    int totalSum = 0;
+}
 
 <table class="table table-bordered table-hover">
     <tr>
-        <th>Id товару</th>
-        <th>Назва товару</th>
-        <th>Фото</th>
-        <th>Опис</th>
-        <th>Кількість</th>
-        <th>Ціна</th>
-        <th>Сумма</th>
-        <th></th>
+        <th style="padding:2px">Id</th>
+        <th style="padding:2px">Назва товару</th>
+        <th style="padding:2px">Фото</th>
+        <th style="padding:2px">Опис</th>
+        <th style="padding:2px">Контакти</th>
+        <th style="padding:2px">Кількість</th>
+        <th style="padding:2px">Ціна</th>
+        <th style="padding:2px">Сумма</th>
+        <th style="padding:2px"></th>
     </tr>
     <tbody>
+       
         @foreach (Order r in Model)
         {
             var base64 = Convert.ToBase64String(r.ProductItem.Image);
             var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+
+            int sum = r.Price * r.Quantity;
+            totalSum += sum;
+            int i = 0;
+           
             <tr>
-                <td>@r.ProductId</td>
-                <td>@r.ProductItem.Name</td>
-                <td><img src="@imgSrc" alt="" width="50%" /></td>
-                <td>@r.ProductItem.Description</td>
-                <td>@r.Quantity</td>
-                <td>@r.Price</td>
-                <td>(@r.Price* @r.Quantity)</td>
-                <td><a asp-area="" asp-controller="Home" asp-action="OrderDelete" asp-route-idOrder="@r.Id">Видалити</a></td>
+                <td style="padding:2px" width="30px">@r.ProductId</td>
+                <td style="padding:2px">@r.ProductItem.Name</td>
+                <td style="padding:0px"><img src="@imgSrc" alt="" width="100px" /></td>
+                <td style="padding:2px">@r.ProductItem.Description</td>
+                <td style="padding:2px">
+                    @if(r.Contact!= null)
+                    {
+
+                        orderContact = r.Contact;
+
+                    }
+                    @if (i == 0)
+                    {
+                       
+                        ProductId = r.ProductId;
+                        UserID = r.UserId;
+                        i++;
+                    }
+
+                </td>
+                <td style="padding:2px">
+                    <form asp-controller="Home" asp-action="OrderChangeQuantityAsync" method="get">
+                        <input type="text" id="quantity" name="quantity" rows="1" style="width:50px" value="@r.Quantity">
+                        <input type="hidden" id="idproduct" name="idproduct" value="@r.ProductId" />
+                        <input type="hidden" id="iduser" name="iduser" value="@r.UserId" />
+                        <br />
+                        <button type="submit">Зберегти</button>
+                    </form>
+                </td>
+                <td style="padding:2px">@r.Price грн.</td>
+                <td style="padding:2px">@sum грн.</td>
+                <td style="padding:2px"><a asp-area="" asp-controller="Home" asp-action="OrderDelete" asp-route-idOrder="@r.Id">Видалити</a></td>
             </tr>
+
         }
+        <tr>
+            <td style="padding:2px;text-align:center" colspan="2"><br />контактні дані</td>
+            <td style="padding:2px;text-align:center" colspan="6">
+                <form asp-controller="Home" asp-action="OrderChangeContacts" method="get">
+                    <textarea type="text" id="contacts" name="contacts">@orderContact</textarea>
+                    <input type="hidden" id="idproduct" name="idproduct" value="@ProductId" />
+                    <input type="hidden" id="iduser" name="iduser" value="@UserID" />
+                    <button type="submit">Змінити та зберегти контактні дані</button>
+                </form>
+            </td>
+            <td style="padding:2px;text-align:center">Загальна сумма: <div style="color:red;font-weight:700">@totalSum грн.</div></td>
+        </tr>
+        <tr>
+            <td style="padding:2px;text-align:center" colspan="8">
+                <form asp-controller="Home" asp-action="AcceptOrderAsync" method="get">
+                    <input type="hidden" id="iduser" name="iduser" value="@UserID" />
+                    <button class="btn btn-success" type="submit">Підтвердити замовлення та відправити на оброблення</button>
+                </form>
+            </td>
+        </tr>
     </tbody>
 
 </table>

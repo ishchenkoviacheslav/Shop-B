@@ -5,6 +5,7 @@
     string orderContact = "NONE";
     int ProductId = 0;
     int UserID = 0;
+    int totalSum = 0;
 }
 
 <table class="table table-bordered table-hover">
@@ -27,6 +28,7 @@
             var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
 
             int sum = r.Price * r.Quantity;
+            totalSum += sum;
             int i = 0;
            
             <tr>
@@ -67,16 +69,24 @@
         }
         <tr>
             <td style="padding:2px;text-align:center" colspan="2"><br />контактні дані</td>
-            <td style="padding:2px;text-align:center" colspan="7">
+            <td style="padding:2px;text-align:center" colspan="6">
                 <form asp-controller="Home" asp-action="OrderChangeContacts" method="get">
                     <textarea type="text" id="contacts" name="contacts">@orderContact</textarea>
                     <input type="hidden" id="idproduct" name="idproduct" value="@ProductId" />
                     <input type="hidden" id="iduser" name="iduser" value="@UserID" />
-                    <button type="submit">Зберегти</button>
+                    <button type="submit">Змінити та зберегти контактні дані</button>
+                </form>
+            </td>
+            <td style="padding:2px;text-align:center">Загальна сумма: <div style="color:red;font-weight:700">@totalSum грн.</div></td>
+        </tr>
+        <tr>
+            <td style="padding:2px;text-align:center" colspan="8">
+                <form asp-controller="Home" asp-action="AcceptOrderAsync" method="get">
+                    <input type="hidden" id="iduser" name="iduser" value="@UserID" />
+                    <button class="btn btn-success" type="submit">Підтвердити замовлення та відправити на оброблення</button>
                 </form>
             </td>
         </tr>
-
     </tbody>
 
 </table>

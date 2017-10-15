@@ -27,9 +27,9 @@ namespace Al_Baraka.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && model.Login.Length>=6 && model.Password.Length>=6)
             {
-                User user = db.Users.Include((u) => u.Role).FirstOrDefault(u => u.Login == model.Login && u.Password == model.Password);
+                User user = db.Users.Include((u) => u.Role).FirstOrDefault(u => u.Login == model.Login && model.Password == EncryptionHelper.Decrypt(model.Password, u.Password));
                 if (user != null)
                 {
                     await Authenticate(model.Login); // аутентификация
@@ -49,14 +49,20 @@ namespace Al_Baraka.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterModel model)
         {
+            
+
             if (ModelState.IsValid)
             {
+                if (model.Login.Length < 6 || model.Password.Length < 6)
+                {
+                    return View(model);
+                }
                 User user = db.Users.FirstOrDefault(u => u.Login == model.Login);
                 if (user == null)
                 {
                     Role role = db.Roles.Where((r) => r.Name == "user").FirstOrDefault();
                     // добавляем пользователя в бд
-                    db.Users.Add(new User { Login = model.Login, Password = model.Password, Role = role });
+                    db.Users.Add(new User { Login = model.Login, Password = EncryptionHelper.Encrypt(model.Password), Role = role });
                     await db.SaveChangesAsync();
 
                     await Authenticate(model.Login); // аутентификация
