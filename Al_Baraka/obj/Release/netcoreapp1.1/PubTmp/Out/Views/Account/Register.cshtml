@@ -1,20 +1,14 @@
 ﻿@model Al_Baraka.ViewModel.RegisterModel
 
+    @*if redirect from another page*@
 @if (Model != null)
 {
-
-
-
-    @if (Model.Login != null && Model.Password != null & Model.ConfirmPassword != null)
+    @if (Model.Login != null && Model.Password != null && Model.ConfirmPassword != null)
     {
-
-
         @if (Model.Login.Length < 6 || Model.Password.Length < 6 || Model.Login == null)
         {
             <h2 style="color:red">Довжина логіну/паролю не менше 6 символів</h2>
         }
-
-
 
         @*@if (!User.Identity.IsAuthenticated & Model.Login != "")
             {
@@ -44,8 +38,13 @@
             <input asp-for="ConfirmPassword" />
             <span asp-validation-for="ConfirmPassword" />
         </div>
+        <br />
+        <div class="g-recaptcha" data-sitekey="6LdspTQUAAAAAKGpdwdXLfw1qovO9admsZ1lpO2F"></div>
+        <br/>
         <div>
             <input type="submit" value="Регистрация" />
         </div>
     </div>
 </form>
+
+<script src='https://www.google.com/recaptcha/api.js' type="text/javascript"></script> 

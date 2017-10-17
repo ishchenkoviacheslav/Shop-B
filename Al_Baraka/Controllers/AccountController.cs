@@ -52,6 +52,7 @@ namespace Al_Baraka.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterModel model)
         {
+            bool status = false;
             string token = HttpContext.Request.Form["g-recaptcha-response"];
             using (var webClient = new HttpClient())
             {
@@ -63,19 +64,15 @@ namespace Al_Baraka.Controllers
                 HttpResponseMessage googleResponse = await webClient.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
                 string json = await googleResponse.Content.ReadAsStringAsync();
                 //var reCaptchaResponse = JsonConvert.DeserializeObject<ReCaptchaResponse>(json);
-                //if (reCaptchaResponse == null)
-                //{
-                //    throw new Exception("Unable To Read Response From Server");
-                //}
-                //else if (!reCaptchaResponse.success)
-                //{
-                //    throw new Exception("Invalid reCaptcha");
-                //}
+                var obj = JObject.Parse(json);
+                status = (bool)obj.SelectToken("success");
+                
             }
 
             if (ModelState.IsValid)
             {
-                if (model.Login.Length < 6 || model.Password.Length < 6)
+                //captcha + pass & login must be longer than 6 symbol
+                if (model.Login.Length < 6 || model.Password.Length < 6 || status == false)
                 {
                     return View(model);
                 }
@@ -120,26 +117,26 @@ namespace Al_Baraka.Controllers
         [HttpPost]
         public async Task<ActionResult> FormSubmitAsync()
         {
-            string token = HttpContext.Request.Form["g-recaptcha-response"];
-            using (var webClient = new HttpClient())
-            {
-                var content = new FormUrlEncodedContent(new[]
-                {
-                        new KeyValuePair<string, string>("secret", "6LdspTQUAAAAAFRHofxs1W21d3ZDvmFIpB7yZsSQ"),
-                        new KeyValuePair<string, string>("response", token)
-                    });
-                HttpResponseMessage googleResponse = await webClient.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
-                string json = await googleResponse.Content.ReadAsStringAsync();
-                //var reCaptchaResponse = JsonConvert.DeserializeObject<ReCaptchaResponse>(json);
-                //if (reCaptchaResponse == null)
-                //{
-                //    throw new Exception("Unable To Read Response From Server");
-                //}
-                //else if (!reCaptchaResponse.success)
-                //{
-                //    throw new Exception("Invalid reCaptcha");
-                //}
-            }
+            //string token = HttpContext.Request.Form["g-recaptcha-response"];
+            //using (var webClient = new HttpClient())
+            //{
+            //    var content = new FormUrlEncodedContent(new[]
+            //    {
+            //            new KeyValuePair<string, string>("secret", "6LdspTQUAAAAAFRHofxs1W21d3ZDvmFIpB7yZsSQ"),
+            //            new KeyValuePair<string, string>("response", token)
+            //        });
+            //    HttpResponseMessage googleResponse = await webClient.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
+            //    string json = await googleResponse.Content.ReadAsStringAsync();
+            //    var reCaptchaResponse = JsonConvert.DeserializeObject<ReCaptchaResponse>(json);
+            //    if (reCaptchaResponse == null)
+            //    {
+            //        throw new Exception("Unable To Read Response From Server");
+            //    }
+            //    else if (!reCaptchaResponse.success)
+            //    {
+            //        throw new Exception("Invalid reCaptcha");
+            //    }
+            //}
 
             //var response = Request[];
             //string secretKey = ;
