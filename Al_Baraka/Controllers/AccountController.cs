@@ -8,6 +8,9 @@ using Al_Baraka.Models;
 using Al_Baraka.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace Al_Baraka.Controllers
 {
@@ -49,7 +52,26 @@ namespace Al_Baraka.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterModel model)
         {
-            
+            string token = HttpContext.Request.Form["g-recaptcha-response"];
+            using (var webClient = new HttpClient())
+            {
+                var content = new FormUrlEncodedContent(new[]
+                {
+                        new KeyValuePair<string, string>("secret", "6LdspTQUAAAAAFRHofxs1W21d3ZDvmFIpB7yZsSQ"),
+                        new KeyValuePair<string, string>("response", token)
+                    });
+                HttpResponseMessage googleResponse = await webClient.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
+                string json = await googleResponse.Content.ReadAsStringAsync();
+                //var reCaptchaResponse = JsonConvert.DeserializeObject<ReCaptchaResponse>(json);
+                //if (reCaptchaResponse == null)
+                //{
+                //    throw new Exception("Unable To Read Response From Server");
+                //}
+                //else if (!reCaptchaResponse.success)
+                //{
+                //    throw new Exception("Invalid reCaptcha");
+                //}
+            }
 
             if (ModelState.IsValid)
             {
@@ -94,6 +116,40 @@ namespace Al_Baraka.Controllers
         {
             await HttpContext.Authentication.SignOutAsync("Cookies");
             return RedirectToAction("Login", "Account");
+        }
+        [HttpPost]
+        public async Task<ActionResult> FormSubmitAsync()
+        {
+            string token = HttpContext.Request.Form["g-recaptcha-response"];
+            using (var webClient = new HttpClient())
+            {
+                var content = new FormUrlEncodedContent(new[]
+                {
+                        new KeyValuePair<string, string>("secret", "6LdspTQUAAAAAFRHofxs1W21d3ZDvmFIpB7yZsSQ"),
+                        new KeyValuePair<string, string>("response", token)
+                    });
+                HttpResponseMessage googleResponse = await webClient.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
+                string json = await googleResponse.Content.ReadAsStringAsync();
+                //var reCaptchaResponse = JsonConvert.DeserializeObject<ReCaptchaResponse>(json);
+                //if (reCaptchaResponse == null)
+                //{
+                //    throw new Exception("Unable To Read Response From Server");
+                //}
+                //else if (!reCaptchaResponse.success)
+                //{
+                //    throw new Exception("Invalid reCaptcha");
+                //}
+            }
+
+            //var response = Request[];
+            //string secretKey = ;
+            //var client = new HttpClient();
+            //var result = client.PostAsync(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secretKey, response));
+            //var obj = JObject.Parse(result);
+            //var status = (bool)obj.SelectToken("success");
+            //ViewBag.Message = status ? "Google reCaptcha validation success" : "Google reCaptcha validation failed";
+
+            return View("Index");
         }
     }
 }

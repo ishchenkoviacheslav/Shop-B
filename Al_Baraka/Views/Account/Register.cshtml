@@ -44,8 +44,21 @@
             <input asp-for="ConfirmPassword" />
             <span asp-validation-for="ConfirmPassword" />
         </div>
+        <div class="g-recaptcha" data-sitekey="6LdspTQUAAAAAKGpdwdXLfw1qovO9admsZ1lpO2F"></div>
+
         <div>
             <input type="submit" value="Регистрация" />
         </div>
     </div>
 </form>
+
+@*<div>
+    @using (Html.BeginForm("FormSubmitAsync", "AccountController", FormMethod.Post))
+    {
+        <input type="submit" value="Submit" />
+    }
+</div>*@
+<span style="display:inline-block; font-size:20px;margin:20px 0;padding:20px;border:1px solid #D3D3D3">
+    @ViewBag.Message
+</span>
+<script src='https://www.google.com/recaptcha/api.js' type="text/javascript"></script> 
