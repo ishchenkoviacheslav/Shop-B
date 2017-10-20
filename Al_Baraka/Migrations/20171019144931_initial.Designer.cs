@@ -8,8 +8,8 @@ using Al_Baraka.Models;
 namespace Al_Baraka.Migrations
 {
     [DbContext(typeof(ProductContext))]
-    [Migration("20171001172318_notefield")]
-    partial class notefield
+    [Migration("20171019144931_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

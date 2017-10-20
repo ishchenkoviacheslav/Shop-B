@@ -8,6 +8,9 @@ using System.IO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Al_Baraka.ViewModel;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using ResizeImageASPNETCore;
 
 namespace Al_Baraka.Controllers
 {
@@ -134,20 +137,36 @@ namespace Al_Baraka.Controllers
         {
             return View();
         }
+        
         [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> AddNew(ViewProduct product)
         {
             Product p = new Product();
+
+            //////////////////////////////////////////
+            
+
             byte[] byteArray = null;
             if (product.Image != null)
             {
-                using (BinaryReader reader = new BinaryReader(product.Image.OpenReadStream()))
+                using (Image img = Image.FromStream(product.Image.OpenReadStream()))
                 {
-                    byteArray = reader.ReadBytes((int)product.Image.Length);
+                    if(img.Width > 320 || img.Height > 480)
+                    {
+                       byteArray = img.Resize(320, 480).ToByteArray();
+                    }
+                    else
+                    {
+                        byteArray = img.ToByteArray();
+                    }
                 }
+                //using (BinaryReader reader = new BinaryReader(product.Image.OpenReadStream()))
+                //{
+                //    byteArray = reader.ReadBytes((int)product.Image.Length);
+                //}
             }
-
+            /////////////////////////////////////////////
             p.Groups = new ProductGroups()
             {
                 DriedFruits = product.Groups.DriedFruits,
@@ -273,9 +292,16 @@ namespace Al_Baraka.Controllers
                 byte[] byteArray = null;
                 if (EditingProduct.Image != null)
                 {
-                    using (BinaryReader reader = new BinaryReader(EditingProduct.Image.OpenReadStream()))
+                    using (Image img = Image.FromStream(EditingProduct.Image.OpenReadStream()))
                     {
-                        byteArray = reader.ReadBytes((int)EditingProduct.Image.Length);
+                        if (img.Width > 320 || img.Height > 480)
+                        {
+                            byteArray = img.Resize(320, 480).ToByteArray();
+                        }
+                        else
+                        {
+                            byteArray = img.ToByteArray();
+                        }
                     }
                     product.Image = byteArray;
                 }
