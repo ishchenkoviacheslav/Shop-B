@@ -14,28 +14,7 @@ namespace ResizeImageASPNETCore
         public static Image Resize(this Image current, int maxWidth, int maxHeight)
         {
             int width, height;
-            #region reckon size
-            if (current.Width > current.Height)
-            {
-                width = maxWidth;
-                height = Convert.ToInt32(current.Height * maxHeight / (double)current.Width);
-            }
-            else
-            {
-                width = Convert.ToInt32(current.Width * maxWidth / (double)current.Height);
-                height = maxHeight;
-            }
-            #endregion
-
-            #region get resized bitmap
-            var canvas = new Bitmap(width, height);
-
-            using (var graphics = Graphics.FromImage(canvas))
-            {
-                graphics.CompositingQuality = CompositingQuality.HighSpeed;
-                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                graphics.CompositingMode = CompositingMode.SourceCopy;
-                if (Array.IndexOf(current.PropertyIdList, 274) > -1)
+            if (Array.IndexOf(current.PropertyIdList, 274) > -1)
                 {
                     var orientation = (int)current.GetPropertyItem(274).Value[0];
                     switch (orientation)
@@ -68,6 +47,34 @@ namespace ResizeImageASPNETCore
                     // This EXIF data is now invalid and should be removed.
                     current.RemovePropertyItem(274);
                 }
+            #region reckon size
+            if (current.Width > current.Height)
+            {
+                double onepercent = current.Width / 100;
+                double howmuchpercent = maxWidth / onepercent;
+                height = (int)(current.Height * (howmuchpercent / 100));
+                width = maxWidth;
+                //height = Convert.ToInt32(current.Height * maxHeight / (double)current.Width);
+            }
+            else
+            {
+                double onepercent = current.Height / 100;
+                double howmuchpercent = maxHeight / onepercent;
+                width = (int)(current.Width * (howmuchpercent / 100));
+                //width = Convert.ToInt32(current.Width * maxWidth / (double)current.Height);
+                height = maxHeight;
+            }
+            #endregion
+
+            #region get resized bitmap
+            var canvas = new Bitmap(width, height);
+
+            using (var graphics = Graphics.FromImage(canvas))
+            {
+                graphics.CompositingQuality = CompositingQuality.HighSpeed;
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                
                 graphics.DrawImage(current, 0, 0, width, height);
             }
 

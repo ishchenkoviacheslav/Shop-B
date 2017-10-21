@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v1.1",
-    "signature": "aee06551f7403634da7a1faaff35d620d858940c"
+    "signature": "5fad238f1aa95699ea654a32f03a6b001fca73a9"
   },
   "compilationOptions": {
     "defines": [
@@ -23,6 +23,7 @@
     ".NETCoreApp,Version=v1.1": {
       "al_baraka/1.0.0": {
         "dependencies": {
+          "CoreCompat.System.Drawing": "1.0.0-beta006",
           "Microsoft.ApplicationInsights.AspNetCore": "2.0.0",
           "Microsoft.AspNetCore": "1.1.2",
           "Microsoft.AspNetCore.Authentication.Cookies": "1.1.2",
@@ -41,6 +42,29 @@
         },
         "compile": {
           "Al_Baraka.dll": {}
+        }
+      },
+      "corecompat.system.drawing/1.0.0-beta006": {
+        "dependencies": {
+          "Microsoft.Win32.Primitives": "4.3.0",
+          "System.Collections.NonGeneric": "4.3.0",
+          "System.Collections.Specialized": "4.3.0",
+          "System.ComponentModel.TypeConverter": "4.3.0",
+          "System.Drawing.Primitives": "4.0.0",
+          "System.IO.FileSystem": "4.3.0",
+          "System.Reflection.TypeExtensions": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Runtime.InteropServices": "4.3.0",
+          "System.Runtime.InteropServices.RuntimeInformation": "4.3.0",
+          "System.Text.Encoding.Extensions": "4.3.0",
+          "System.Text.RegularExpressions": "4.3.0",
+          "System.Threading": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/CoreCompat.System.Drawing.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.3/CoreCompat.System.Drawing.dll": {}
         }
       },
       "microsoft.applicationinsights/2.2.0": {
@@ -1522,6 +1546,9 @@
         },
         "runtime": {
           "lib/netstandard1.3/System.Collections.Specialized.dll": {}
+        },
+        "compile": {
+          "ref/netstandard1.3/System.Collections.Specialized.dll": {}
         }
       },
       "system.componentmodel.primitives/4.3.0": {
@@ -1679,6 +1706,18 @@
         },
         "compile": {
           "ref/netstandard1.0/System.Diagnostics.Tools.dll": {}
+        }
+      },
+      "system.drawing.primitives/4.0.0": {
+        "dependencies": {
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.1/System.Drawing.Primitives.dll": {}
+        },
+        "compile": {
+          "ref/netstandard1.1/System.Drawing.Primitives.dll": {}
         }
       },
       "system.interactive.async/3.0.0": {
@@ -3371,6 +3410,13 @@
       "serviceable": false,
       "sha512": ""
     },
+    "corecompat.system.drawing/1.0.0-beta006": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-KOBeVy8FHx9zkXrIZAM8OdXPrimROmvfB02fOegrYIelNN/zWhsOwzONgD7gw7wOTJgAFfdwpme5CiMraJj47Q==",
+      "path": "corecompat.system.drawing/1.0.0-beta006",
+      "hashPath": "corecompat.system.drawing.1.0.0-beta006.nupkg.sha512"
+    },
     "microsoft.applicationinsights/2.2.0": {
       "type": "package",
       "serviceable": true,
@@ -4147,6 +4193,13 @@
       "sha512": "sha512-UUvkJfSYJMM6x527dJg2VyWPSRqIVB0Z7dbjHst1zmwTXz5CcXSYJFWRpuigfbO1Lf7yfZiIaEUesfnl/g5EyA==",
       "path": "system.diagnostics.tools/4.3.0",
       "hashPath": "system.diagnostics.tools.4.3.0.nupkg.sha512"
+    },
+    "system.drawing.primitives/4.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9lVRG1voBwzLGZkf1XFJrobdZDZ5ZHMU4FVTbXAbzehpN90yYgkUeo9GoEYdvkt/EXaaHZJAeuffXP4JBbY+Ig==",
+      "path": "system.drawing.primitives/4.0.0",
+      "hashPath": "system.drawing.primitives.4.0.0.nupkg.sha512"
     },
     "system.interactive.async/3.0.0": {
       "type": "package",

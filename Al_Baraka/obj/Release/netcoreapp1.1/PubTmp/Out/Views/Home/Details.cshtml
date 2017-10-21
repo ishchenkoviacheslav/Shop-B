@@ -1,14 +1,15 @@
 ﻿@using Al_Baraka.Models;
 @model Product
-
+    
 <h2>@Model.Name</h2>
 @{
     var base64 = Convert.ToBase64String(Model.Image);
     var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
 }
+
 <div class="row">
-    <div class="col-md-6">
-        <img src="@imgSrc" alt="@Model.Name" width="100%" />
+    <div id="myimg" class="col-md-6">
+        <img src="@imgSrc"  alt="@Model.Name" />
         <br />
     </div>
     <div class="col-md-6">
