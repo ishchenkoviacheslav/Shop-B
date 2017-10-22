@@ -166,6 +166,20 @@ namespace Al_Baraka.Controllers
                 //    byteArray = reader.ReadBytes((int)product.Image.Length);
                 //}
             }
+            else
+            {
+                using (Image img = Image.FromFile(Directory.GetCurrentDirectory()+ "/wwwroot/images/noimage.jpg"))
+                {
+                    if (img.Width > 320 || img.Height > 480)
+                    {
+                        byteArray = img.Resize(320, 480).ToByteArray();
+                    }
+                    else
+                    {
+                        byteArray = img.ToByteArray();
+                    }
+                }
+            }
             /////////////////////////////////////////////
             p.Groups = new ProductGroups()
             {
