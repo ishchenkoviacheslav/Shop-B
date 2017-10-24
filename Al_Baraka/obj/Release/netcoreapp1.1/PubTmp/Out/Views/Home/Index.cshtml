@@ -1,76 +1,6 @@
 ﻿@using Al_Baraka.Models;
 @model List<List<Product>>
 
-@*<div id="amazingcarousel-container-1" style="padding-left:10px;padding-right:10px;padding-top:10px;padding-bottom:10px">
-        <div id="amazingcarousel-1" style="display:none;position:relative;width:100%;margin:0px;">
-            <div class="amazingcarousel-list-container">
-                <ul class="amazingcarousel-list">
-
-                    @for (int i = 0; i < Model[0].Count; i++)
-                    {
-                        var base64 = Convert.ToBase64String(Model[0][i].Image);
-                        var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
-                        <li class="amazingcarousel-item">
-                            <div class="amazingcarousel-item-container">
-                                <div class="amazingcarousel-image">
-                                    <a asp-area="" asp-controller="Home" asp-action="Details" asp-route-IdProduct="@Model[0][i].Id">
-                                        <img src="@imgSrc" />
-                                    </a>
-                                </div>
-                                <h5><a asp-area="" asp-controller="Home" asp-action="Details" asp-route-IdProduct="@Model[0][i].Id"> @Model[0][i].Name </a></h5>
-                                <div class="amazingcarousel-description">
-                                    <p class="text-danger">
-                                        Ціна: @Model[0][i].Price за
-                                        @switch (Model[0][i].Measure)
-                                        {
-                                            case measure.kg:
-                                                <text>кг.</text>
-                                                break;
-                                            case measure.gramm:
-                                                <text>гр.</text>
-                                                break;
-                                            case measure.liter:
-                                                <text>літр</text>
-                                                break;
-                                            case measure.mililiter:
-                                                <text>мл.</text>
-                                                break;
-                                            case measure.сanister:
-                                                <text>каністру</text>
-                                                break;
-                                            case measure.box:
-                                                <text>коробку</text>
-                                                break;
-                                            case measure.bottle:
-                                                <text>пляшку</text>
-                                                break;
-                                            case measure.packet:
-                                                <text>пачку</text>
-                                                break;
-                                            case measure.piece:
-                                                <text>шт.</text>
-                                                break;
-                                            case measure.bag:
-                                                <text>мішок</text>
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                    </p>
-                                </div>
-                                <p>@Model[0][i].Description.Substring(0, (Model[0][i].Description.Length > 27 ? 27 : Model[0][i].Description.Length)) ..</p>
-                            </div>
-
-                        </li>
-                    }
-
-                </ul>
-                <div class="amazingcarousel-prev"></div>
-                <div class="amazingcarousel-next"></div>
-            </div>
-        </div>
-    </div>*@
-
 @if (Model[0].Count > 0)
 {
     <a asp-area="" asp-controller="Home" asp-action="ShowOneGroup" asp-route-idgroup="3" style="text-decoration:none"><h1>Сухофрукти</h1></a>
@@ -87,7 +17,7 @@
                     <div class="item active">
                         <div class="row">
                             <div class="col-xs-6">
-                                <img src="@imgSrc" alt="" class="img-responsive" style="width:240px;height:180px;" />
+                                <img src="@imgSrc" alt="" class="img-responsive"  />
                             </div>
                             <div class="col-xs-6">
                                 <p>
@@ -131,7 +61,7 @@
                                             break;
                                     }
                                 </p>
-                                <p style="color:black;padding-right:10px">@Model[0][i].Description.Substring(0, (Model[0][i].Description.Length > 250 ? 250 : Model[0][i].Description.Length))</p>
+                                <p style="color:black;padding-right:10px">@Model[0][i].Description.Substring(0, (Model[0][i].Description.Length > 100 ? 100 : Model[0][i].Description.Length)) ..</p>
                             </div>
                         </div>
                     </div>
@@ -141,7 +71,7 @@
                     <div class="row">
                         <div class="col-xs-6">
 
-                            <img src="@imgSrc" alt="" class="img-responsive" style="width:240px;height:180px" />
+                            <img src="@imgSrc" alt="" class="img-responsive"  />
                         </div>
                         <div class="col-xs-6">
 
@@ -187,7 +117,7 @@
                                     break;
                             }
                         </p>
-                        <p style="color:black;padding-right:10px">@Model[0][i].Description.Substring(0, (Model[0][i].Description.Length > 250 ? 250 : Model[0][i].Description.Length)) ..</p>
+                        <p style="color:black;padding-right:10px">@Model[0][i].Description.Substring(0, (Model[0][i].Description.Length > 100 ? 100 : Model[0][i].Description.Length)) ..</p>
                     </div>
                 </div>
             }
@@ -222,7 +152,7 @@
                         <div class="item active">
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <img src="@imgSrc" alt="" class="img-responsive" style="width:240px;height:180px" />
+                                    <img src="@imgSrc" alt="" class="img-responsive"  />
                                 </div>
                                 <div class="col-xs-6">
                                     <p>
@@ -266,7 +196,7 @@
                                                 break;
                                         }
                                     </p>
-                                    <p style="color:black;padding-right:10px">@Model[1][i].Description.Substring(0, (Model[1][i].Description.Length > 250 ? 250 : Model[1][i].Description.Length))</p>
+                                    <p style="color:black;padding-right:10px">@Model[1][i].Description.Substring(0, (Model[1][i].Description.Length > 100 ? 100 : Model[1][i].Description.Length)) ..</p>
                                 </div>
                             </div>
                         </div>
@@ -276,7 +206,7 @@
                         <div class="row">
                             <div class="col-xs-6">
 
-                                <img src="@imgSrc" alt="" class="img-responsive" style="width:240px;height:180px" />
+                                <img src="@imgSrc" alt="" class="img-responsive"  />
                             </div>
                             <div class="col-xs-6">
 
@@ -322,7 +252,7 @@
                                         break;
                                 }
                             </p>
-                            <p style="color:black;padding-right:10px">@Model[1][i].Description.Substring(0, (Model[1][i].Description.Length > 250 ? 250 : Model[1][i].Description.Length)) ..</p>
+                            <p style="color:black;padding-right:10px">@Model[1][i].Description.Substring(0, (Model[1][i].Description.Length > 100 ? 100 : Model[1][i].Description.Length)) ..</p>
                         </div>
                     </div>
                 }
@@ -357,7 +287,7 @@
                                 <div class="item active">
                                     <div class="row">
                                         <div class="col-xs-6">
-                                            <img src="@imgSrc" alt="" class="img-responsive" style="width:240px;height:180px" />
+                                            <img src="@imgSrc" alt="" class="img-responsive"  />
                                         </div>
                                         <div class="col-xs-6">
                                             <p>
@@ -401,7 +331,7 @@
                                                         break;
                                                 }
                                             </p>
-                                            <p style="color:black;padding-right:10px">@Model[2][i].Description.Substring(0, (Model[2][i].Description.Length > 250 ? 250 : Model[2][i].Description.Length))</p>
+                                            <p style="color:black;padding-right:10px">@Model[2][i].Description.Substring(0, (Model[2][i].Description.Length > 100 ? 100 : Model[2][i].Description.Length)) ..</p>
                                         </div>
                                     </div>
                                 </div>
@@ -411,7 +341,7 @@
                                 <div class="row">
                                     <div class="col-xs-6">
 
-                                        <img src="@imgSrc" alt="" class="img-responsive" style="width:240px;height:180px" />
+                                        <img src="@imgSrc" alt="" class="img-responsive"  />
                                     </div>
                                     <div class="col-xs-6">
 
@@ -457,7 +387,7 @@
                                                 break;
                                         }
                                     </p>
-                                    <p style="color:black;padding-right:10px">@Model[2][i].Description.Substring(0, (Model[2][i].Description.Length > 250 ? 250 : Model[2][i].Description.Length)) ..</p>
+                                    <p style="color:black;padding-right:10px">@Model[2][i].Description.Substring(0, (Model[2][i].Description.Length > 100 ? 100 : Model[2][i].Description.Length)) ..</p>
                                 </div>
                             </div>
                         }
@@ -491,7 +421,7 @@
                                             <div class="item active">
                                                 <div class="row">
                                                     <div class="col-xs-6">
-                                                        <img src="@imgSrc" alt="" class="img-responsive" style="width:240px;height:180px" />
+                                                        <img src="@imgSrc" alt="" class="img-responsive"  />
                                                     </div>
                                                     <div class="col-xs-6">
                                                         <p>
@@ -535,7 +465,7 @@
                                                                     break;
                                                             }
                                                         </p>
-                                                        <p style="color:black;padding-right:10px">@Model[3][i].Description.Substring(0, (Model[3][i].Description.Length > 250 ? 250 : Model[3][i].Description.Length))</p>
+                                                        <p style="color:black;padding-right:10px">@Model[3][i].Description.Substring(0, (Model[3][i].Description.Length > 100 ? 100 : Model[3][i].Description.Length)) ..</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -545,7 +475,7 @@
                                             <div class="row">
                                                 <div class="col-xs-6">
 
-                                                    <img src="@imgSrc" alt="" class="img-responsive" style="width:240px;height:180px" />
+                                                    <img src="@imgSrc" alt="" class="img-responsive"  />
                                                 </div>
                                                 <div class="col-xs-6">
 
@@ -591,7 +521,7 @@
                                                             break;
                                                     }
                                                 </p>
-                                                <p style="color:black;padding-right:10px">@Model[3][i].Description.Substring(0, (Model[3][i].Description.Length > 250 ? 250 : Model[3][i].Description.Length)) ..</p>
+                                                <p style="color:black;padding-right:10px">@Model[3][i].Description.Substring(0, (Model[3][i].Description.Length > 100 ? 100 : Model[3][i].Description.Length)) ..</p>
                                             </div>
                                         </div>
                                     }
@@ -626,7 +556,7 @@
                                                 <div class="item active">
                                                     <div class="row">
                                                         <div class="col-xs-6">
-                                                            <img src="@imgSrc" alt="" class="img-responsive" style="width:240px;height:180px" />
+                                                            <img src="@imgSrc" alt="" class="img-responsive"  />
                                                         </div>
                                                         <div class="col-xs-6">
                                                             <p>
@@ -670,7 +600,7 @@
                                                                         break;
                                                                 }
                                                             </p>
-                                                            <p style="color:black;padding-right:10px">@Model[4][i].Description.Substring(0, (Model[4][i].Description.Length > 250 ? 250 : Model[4][i].Description.Length))</p>
+                                                            <p style="color:black;padding-right:10px">@Model[4][i].Description.Substring(0, (Model[4][i].Description.Length > 100 ? 100 : Model[4][i].Description.Length)) ..</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -680,7 +610,7 @@
                                                 <div class="row">
                                                     <div class="col-xs-6">
 
-                                                        <img src="@imgSrc" alt="" class="img-responsive" style="width:240px;height:180px;" />
+                                                        <img src="@imgSrc" alt="" class="img-responsive"  />
                                                     </div>
                                                     <div class="col-xs-6">
 
@@ -726,7 +656,7 @@
                                                                 break;
                                                         }
                                                     </p>
-                                                    <p style="color:black;padding-right:10px">@Model[4][i].Description.Substring(0, (Model[4][i].Description.Length > 250 ? 250 : Model[4][i].Description.Length)) ..</p>
+                                                    <p style="color:black;padding-right:10px">@Model[4][i].Description.Substring(0, (Model[4][i].Description.Length > 100 ? 100 : Model[4][i].Description.Length)) ..</p>
                                                 </div>
                                             </div>
                                         }
@@ -761,7 +691,7 @@
                                                         <div class="item active">
                                                             <div class="row">
                                                                 <div class="col-xs-6">
-                                                                    <img src="@imgSrc" alt="" class="img-responsive" style="width:240px;height:180px;" />
+                                                                    <img src="@imgSrc" alt="" class="img-responsive"  />
                                                                 </div>
                                                                 <div class="col-xs-6">
                                                                     <p>
@@ -805,7 +735,7 @@
                                                                                 break;
                                                                         }
                                                                     </p>
-                                                                    <p style="color:black;padding-right:10px">@Model[5][i].Description.Substring(0, (Model[5][i].Description.Length > 250 ? 250 : Model[5][i].Description.Length))</p>
+                                                                    <p style="color:black;padding-right:10px">@Model[5][i].Description.Substring(0, (Model[5][i].Description.Length > 100 ? 100 : Model[5][i].Description.Length)) ..</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -815,7 +745,7 @@
                                                         <div class="row">
                                                             <div class="col-xs-6">
 
-                                                                <img src="@imgSrc" alt="" class="img-responsive" style="width:240px;height:180px;" />
+                                                                <img src="@imgSrc" alt="" class="img-responsive"  />
                                                             </div>
                                                             <div class="col-xs-6">
 
@@ -861,7 +791,7 @@
                                                                         break;
                                                                 }
                                                             </p>
-                                                            <p style="color:black;padding-right:10px">@Model[5][i].Description.Substring(0, (Model[5][i].Description.Length > 250 ? 250 : Model[5][i].Description.Length)) ..</p>
+                                                            <p style="color:black;padding-right:10px">@Model[5][i].Description.Substring(0, (Model[5][i].Description.Length > 100 ? 100 : Model[5][i].Description.Length)) ..</p>
                                                         </div>
                                                     </div>
                                                 }
@@ -897,7 +827,7 @@
                                                                 <div class="item active">
                                                                     <div class="row">
                                                                         <div class="col-xs-6">
-                                                                            <img src="@imgSrc" alt="" class="img-responsive" style="width:240px;height:180px" />
+                                                                            <img src="@imgSrc" alt="" class="img-responsive"  />
                                                                         </div>
                                                                         <div class="col-xs-6">
                                                                             <p>
@@ -941,7 +871,7 @@
                                                                                         break;
                                                                                 }
                                                                             </p>
-                                                                            <p style="color:black;padding-right:10px">@Model[6][i].Description.Substring(0, (Model[6][i].Description.Length > 250 ? 250 : Model[6][i].Description.Length))</p>
+                                                                            <p style="color:black;padding-right:10px">@Model[6][i].Description.Substring(0, (Model[6][i].Description.Length > 100 ? 100 : Model[6][i].Description.Length)) ..</p>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -951,7 +881,7 @@
                                                                 <div class="row">
                                                                     <div class="col-xs-6">
 
-                                                                        <img src="@imgSrc" alt="" class="img-responsive" style="width:240px;height:180px" />
+                                                                        <img src="@imgSrc" alt="" class="img-responsive"  />
                                                                     </div>
                                                                     <div class="col-xs-6">
 
@@ -997,7 +927,7 @@
                                                                                 break;
                                                                         }
                                                                     </p>
-                                                                    <p style="color:black;padding-right:10px">@Model[6][i].Description.Substring(0, (Model[6][i].Description.Length > 250 ? 250 : Model[6][i].Description.Length)) ..</p>
+                                                                    <p style="color:black;padding-right:10px">@Model[6][i].Description.Substring(0, (Model[6][i].Description.Length > 100 ? 100 : Model[6][i].Description.Length)) ..</p>
                                                                 </div>
                                                             </div>
                                                         }
@@ -1033,7 +963,7 @@
                     <div class="item active">
                         <div class="row">
                             <div class="col-xs-6">
-                                <img src="@imgSrc" alt="" class="img-responsive" style="width:240px;height:180px" />
+                                <img src="@imgSrc" alt="" class="img-responsive"  />
                             </div>
                             <div class="col-xs-6">
                                 <p>
@@ -1077,7 +1007,7 @@
                                             break;
                                     }
                                 </p>
-                                <p style="color:black;padding-right:10px">@Model[7][i].Description.Substring(0, (Model[7][i].Description.Length > 250 ? 250 : Model[7][i].Description.Length))</p>
+                                <p style="color:black;padding-right:10px">@Model[7][i].Description.Substring(0, (Model[7][i].Description.Length > 100 ? 100 : Model[7][i].Description.Length)) ..</p>
                             </div>
                         </div>
                     </div>
@@ -1087,7 +1017,7 @@
                     <div class="row">
                         <div class="col-xs-6">
 
-                            <img src="@imgSrc" alt="" class="img-responsive" style="width:240px;height:180px" />
+                            <img src="@imgSrc" alt="" class="img-responsive"  />
                         </div>
                         <div class="col-xs-6">
 
@@ -1133,7 +1063,7 @@
                                     break;
                             }
                         </p>
-                        <p style="color:black;padding-right:10px">@Model[7][i].Description.Substring(0, (Model[7][i].Description.Length > 250 ? 250 : Model[7][i].Description.Length)) ..</p>
+                        <p style="color:black;padding-right:10px">@Model[7][i].Description.Substring(0, (Model[7][i].Description.Length > 100 ? 100 : Model[7][i].Description.Length)) ..</p>
                     </div>
                 </div>
             }
@@ -1169,7 +1099,7 @@
                     <div class="item active">
                         <div class="row">
                             <div class="col-xs-6">
-                                <img src="@imgSrc" alt="" class="img-responsive" style="width:240px;height:180px" />
+                                <img src="@imgSrc" alt="" class="img-responsive"  />
                             </div>
                             <div class="col-xs-6">
                                 <p>
@@ -1213,7 +1143,7 @@
                                             break;
                                     }
                                 </p>
-                                <p style="color:black;padding-right:10px">@Model[8][i].Description.Substring(0, (Model[8][i].Description.Length > 250 ? 250 : Model[8][i].Description.Length))</p>
+                                <p style="color:black;padding-right:10px">@Model[8][i].Description.Substring(0, (Model[8][i].Description.Length > 100 ? 100 : Model[8][i].Description.Length)) ..</p>
                             </div>
                         </div>
                     </div>
@@ -1223,7 +1153,7 @@
                     <div class="row">
                         <div class="col-xs-6">
 
-                            <img src="@imgSrc" alt="" class="img-responsive" style="width:240px;height:180px;" />
+                            <img src="@imgSrc" alt="" class="img-responsive"  />
                         </div>
                         <div class="col-xs-6">
 
@@ -1269,7 +1199,7 @@
                                     break;
                             }
                         </p>
-                        <p style="color:black;padding-right:10px">@Model[8][i].Description.Substring(0, (Model[8][i].Description.Length > 250 ? 250 : Model[8][i].Description.Length)) ..</p>
+                        <p style="color:black;padding-right:10px">@Model[8][i].Description.Substring(0, (Model[8][i].Description.Length > 100 ? 100 : Model[8][i].Description.Length)) ..</p>
                     </div>
                 </div>
             }
